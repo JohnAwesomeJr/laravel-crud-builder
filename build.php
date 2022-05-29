@@ -8,6 +8,7 @@ $globalColumns = array(
     'driver' => 'text'
 );
 
+
 // Use the below code on the create and edit if you want one of the inputs to be a dropdown of a database.
 // <select name='part'>
 //     @foreach ($list as $line)
