@@ -3,10 +3,50 @@ $projectName = 'testLaravel';
 $globalName = 'assembly';
 $globalMaxNumberPerPage = 15;
 $globalColumns = array(
-    'part' => 'text',
-    'car' => 'text',
-    'driver' => 'text'
+    [
+        'type' => 'dbRow',
+        'name' => 'part',
+        'htmlInputType' => 'text'
+    ],
+    [
+        'type' => 'dbRow',
+        'name' => 'car',
+        'htmlInputType' => 'text'
+    ],
+    [
+        'type' => 'dbRow',
+        'name' => 'driver',
+        'htmlInputType' => 'number'
+    ],
+    // [
+    //     'type' => 'relational',
+    //     'databaseName' => 'selectList',
+    //     'name' => 'parts',
+    //     'htmlInputType' => 'crud',
+    //     'tables' => [
+    //         'partNumber' => 'text',
+    //         'quantity' => 'number'
+    //     ]
+    // ],
+    [
+        // @todo test array
+        'type' => 'selectList',
+        'name' => 'selectList',
+        'htmlInputType' => 'select',
+        'databaseName' => 'parts',
+        'columnShown' => 'partNumber',
+        'IdCollumnForThisTable' => 'selectListDropdown',
+        'ForenIdColumn' => 'id'
+
+    ],
 );
+echo '<pre>';
+print_r($globalColumns);
+echo '<pre>';
+
+
+
+
 
 
 // Use the below code on the create and edit if you want one of the inputs to be a dropdown of a database.
@@ -19,6 +59,12 @@ $globalColumns = array(
 //         @endif
 //     @endforeach
 // </select>
+
+function isAssoc(array $arr)
+{
+    if (array() === $arr) return false;
+    return array_keys($arr) !== range(0, count($arr) - 1);
+}
 
 
 
@@ -34,7 +80,9 @@ $globalModelFolderName = "{$projectName}/app/Models";
 
 
 
-// make directory tree
+/* -------------------------------------------------------------------------- */
+/*                           // make directory tree                           */
+/* -------------------------------------------------------------------------- */
 
 if (!file_exists($globalViewFolderName)) {
     mkdir($globalViewFolderName, 0777, true);
@@ -46,7 +94,9 @@ if (!file_exists($globalModelFolderName)) {
     mkdir($globalModelFolderName, 0777, true);
 }
 
-// make create view
+/* -------------------------------------------------------------------------- */
+/*                             // make create view                            */
+/* -------------------------------------------------------------------------- */
 $output = <<<EOD
 <a href='{{ url('{$globalUrl}') }}'>BACK</a><br>
 <hr>
@@ -59,12 +109,16 @@ $output = <<<EOD
     @csrf
 EOD;
 foreach ($globalColumns as $key => $value) {
-
-    $thisElement = <<<EOD
-    <input name='{$key}' type='{$value}'>:{$key}
-    <br>
-    EOD;
-    $output = $output . $thisElement;
+    if ($globalColumns[$key]['type'] != 'dbRow') {
+        $thisElement = '<input placeholder="i am an array">';
+        $output = $output . $thisElement;
+    } else {
+        $thisElement = <<<EOD
+        <input name='{$globalColumns[$key]['name']}' type='{$globalColumns[$key]['htmlInputType']}'>:{$globalColumns[$key]['name']}
+        <br>
+        EOD;
+        $output = $output . $thisElement;
+    }
 }
 
 $output2 = <<<EOD2
@@ -78,7 +132,9 @@ $txt = $output . $output2;
 fwrite($myfile, $txt);
 fclose($myfile);
 
-//  make edit view
+/* -------------------------------------------------------------------------- */
+/*                             //  make edit view                             */
+/* -------------------------------------------------------------------------- */
 $output = <<<EOD
 <a href='{{ url('$globalUrl') }}'>BACK</a><br>
 <hr>
@@ -94,12 +150,27 @@ $output = <<<EOD
 EOD;
 
 foreach ($globalColumns as $key => $value) {
-    $thisElement = <<<EOD
+    if ($globalColumns[$key]['type'] == 'dbRow') {
+        $thisElement = <<<EOD
     <br>
-    <input value='{{ \${$globalControllerVariableName}->{$key} }}' name='{$key}' type='{$value}'>:{$key}
+    <input value='{{ \${$globalControllerVariableName}->{$globalColumns[$key]['name']} }}' name='{$globalColumns[$key]['name']}' type='{$globalColumns[$key]['htmlInputType']}'>:{$globalColumns[$key]['name']}
     <br>
     EOD;
-    $output = $output . $thisElement;
+        $output = $output . $thisElement;
+    }
+    // @todo select list in view
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $first = "<select name='{$globalColumns[$key]["databaseName"]}{$globalColumns[$key]["columnShown"]}'>";
+        $foreach1 = <<<EOD
+        @foreach(\${$globalColumns[$key]['databaseName']}{$key} as \$thisline)
+        
+        <option value="{{\$thisline->{$globalColumns[$key]['ForenIdColumn']}}}">{{\$thisline->{$globalColumns[$key]['columnShown']}}}</option>
+        @endforeach
+        EOD;
+        $last = '</select>';
+        $combine = $first . $foreach1 . $last;
+        $output = $output . $combine;
+    }
 }
 
 $output2 = <<<EOD
@@ -119,7 +190,9 @@ $txt = $output . $output2;
 fwrite($myfile, $txt);
 fclose($myfile);
 
-// Make index File
+/* -------------------------------------------------------------------------- */
+/*                             // Make index File                             */
+/* -------------------------------------------------------------------------- */
 
 $output = <<<EOD
 <style>
@@ -153,8 +226,14 @@ table {
 EOD;
 
 foreach ($globalColumns as $key => $value) {
-    $tackOn = '<th>' . strtoupper($key) . '</th>';
-    $output = $output . $tackOn;
+    if ($globalColumns[$key]['type'] == 'dbRow') {
+        $tackOn = '<th>' . strtoupper($globalColumns[$key]['name']) . '</th>';
+        $output = $output . $tackOn;
+    }
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $tackOn = '<th>' . strtoupper($globalColumns[$key]['name']) . '</th>';
+        $output = $output . $tackOn;
+    }
 }
 
 $outputNew = <<<EOD
@@ -178,9 +257,16 @@ $outputNew = <<<EOD
     </td>
 EOD;
 $output = $output . $outputNew;
+
 foreach ($globalColumns as $key => $value) {
-    $thisLIneItem = "<td>{{ \$line->{$key} }} </td>";
-    $output = $output . $thisLIneItem;
+    if ($globalColumns[$key]['type'] == 'dbRow') {
+        $thisLIneItem = "<td>{{ \$line->{$globalColumns[$key]['name']} }} </td>";
+        $output = $output . $thisLIneItem;
+    }
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $thisLIneItem = "<td>{{ \$line->{$globalColumns[$key]['name']}->{$globalColumns[$key]['columnShown']} }}</td>";
+        $output = $output . $thisLIneItem;
+    }
 }
 
 $output3 = <<<EOD
@@ -205,7 +291,9 @@ $txt = $output . $output3;
 fwrite($myfile, $txt);
 fclose($myfile);
 
-// Make model file
+/* -------------------------------------------------------------------------- */
+/*                             // Make model file                             */
+/* -------------------------------------------------------------------------- */
 
 $output = <<<EOD
 <?php
@@ -218,23 +306,40 @@ use Illuminate\Database\Eloquent\Model;
 class {$globalDatabaseName} extends Model
 {
     use HasFactory;
+
+EOD;
+foreach ($globalColumns as $key => $value) {
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $thisThing = <<<MIKEEDO
+    public function {$globalColumns[$key]['name']}()
+    {
+        return \$this->belongsTo({$globalColumns[$key]['databaseName']}::class, '{$globalColumns[$key]['IdCollumnForThisTable']}', '{$globalColumns[$key]['ForenIdColumn']}');
+    }
+    MIKEEDO;
+        $output = $output . $thisThing;
+    }
+}
+$output2 = <<<EOD
 }
 EOD;
 $myfile = fopen("{$globalModelFolderName}/{$globalDatabaseName}.php", "w") or die("Unable to open file!");
-$txt = $output;
+$txt = $output . $output2;
 fwrite($myfile, $txt);
 fclose($myfile);
 
-// make controller file
+/* -------------------------------------------------------------------------- */
+/*                           // make controller file                          */
+/* -------------------------------------------------------------------------- */
 
-$output = <<<EDO
+$outputStart = <<<EOD
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\{$globalDatabaseName};
 use Illuminate\Http\Request;
+EOD;
 
+$output = <<<EDO
 class {$globalDatabaseName}Controller extends Controller
 {
     /**
@@ -244,6 +349,25 @@ class {$globalDatabaseName}Controller extends Controller
      */
     public function index()
     {
+EDO;
+// top part oc controller
+foreach ($globalColumns as $key => $value) {
+    $listTyep = $globalColumns[$key]['type'];
+
+    if ($listTyep == 'selectList') {
+        $model = $globalColumns[$key]['databaseName'];
+        $import = <<<EDO
+        
+        use App\Models\{$model};
+        \n
+        EDO;
+        $outputStart = $outputStart . $import;
+    }
+}
+
+
+
+$outputnew = <<<EDO
         \${$globalControllerVariableName} = {$globalDatabaseName}::orderBy('id', 'DESC')->paginate({$globalMaxNumberPerPage});
         return view('{$globalDatabaseName}.index', ['{$globalControllerVariableName}' => \${$globalControllerVariableName}]);
     }
@@ -269,11 +393,17 @@ class {$globalDatabaseName}Controller extends Controller
         \n
 EDO;
 foreach ($globalColumns as $key => $value) {
-    $thisRow = <<<EDO
+    if ($globalColumns[$key]['type'] == 'dbRow') {
+        $thisRow = <<<EDO
     \t
-    \${$globalDatabaseName}->{$key} = \$request->input('{$key}'); \n
+    \${$globalDatabaseName}->{$globalColumns[$key]['name']} = \$request->input('{$globalColumns[$key]['name']}'); \n
     EDO;
-    $output = $output . $thisRow;
+        $outputnew = $outputnew . $thisRow;
+    }
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $thisRow = '//i am an array';
+        $outputnew = $outputnew . $thisRow;
+    }
 }
 
 $output2 = <<<EDO
@@ -301,8 +431,26 @@ $output2 = <<<EDO
      */
     public function edit($globalDatabaseName \${$globalDatabaseName}, \$id)
     {
+        \$pushToViewArray = []; \n
+EDO;
+// edit controller
+foreach ($globalColumns as $key => $value) {
+    if ($globalColumns[$key]['type'] == 'selectList') {
+
+
+        $thisThingIsGreat = <<<EDO
+                \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}::class::all();
+                \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
+                EDO;
+        $output2 = $output2 . $thisThingIsGreat;
+    }
+}
+
+
+$outputMiddle = <<<EDO
         \$thisSinglesRow = $globalDatabaseName::find(\$id);
-        return view('{$globalDatabaseName}.edit', ['{$globalControllerVariableName}' => \$thisSinglesRow]);
+        \$pushToViewArray += ['{$globalControllerVariableName}' => \$thisSinglesRow];
+        return view('{$globalDatabaseName}.edit', \$pushToViewArray);
     }
 
     /**
@@ -318,10 +466,16 @@ $output2 = <<<EDO
 EDO;
 
 foreach ($globalColumns as $key => $value) {
-    $thisRow = <<<EDO
-    \${$globalControllerVariableName}->{$key} = \$request->input('{$key}'); \n
+    if ($globalColumns[$key]['type'] == 'dbRow') {
+        $thisRow = <<<EDO
+    \${$globalControllerVariableName}->{$globalColumns[$key]['name']} = \$request->input('{$globalColumns[$key]['name']}'); \n
     EDO;
-    $output2 = $output2 . $thisRow;
+        $outputMiddle = $outputMiddle . $thisRow;
+    }
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $thisRow = '//i am an array';
+        $outputMiddle = $outputMiddle . $thisRow;
+    }
 }
 
 
@@ -346,7 +500,7 @@ $output3 = <<<EDO
 }
 EDO;
 $myfile = fopen("{$globalControllerFolderName}/{$globalDatabaseName}Controller.php", "w") or die("Unable to open file!");
-$txt = $output . $output2 . $output3;
+$txt = $outputStart . $output . $outputnew . $output2 . $outputMiddle . $output3;
 fwrite($myfile, $txt);
 fclose($myfile);
 
@@ -365,7 +519,7 @@ fclose($myfile);
 
 
 
-
+$controllerNameJoined = $globalDatabaseName . 'Controller';
 $output = <<<EDO
 <style>
 div{
@@ -376,6 +530,8 @@ padding:20px;
 <h1>One More Step</h1>
 <p>Please copy and paste the code below and place it in the web.php Routes file. <br></p>
 <div>
+use App\Http\Controllers\{$controllerNameJoined};
+<br>
 Route::resource('{$globalUrl}', {$globalDatabaseName}Controller::class);
 </div>
 EDO;
