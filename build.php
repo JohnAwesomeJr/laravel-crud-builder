@@ -39,6 +39,16 @@ $globalColumns = array(
         'ForenIdColumn' => 'id'
 
     ],
+    [
+        'type' => 'selectList',
+        'name' => 'thenextselectlist',
+        'htmlInputType' => 'select',
+        'databaseName' => 'parts',
+        'columnShown' => 'created_at',
+        'IdCollumnForThisTable' => 'selectListDropdown',
+        'ForenIdColumn' => 'id'
+
+    ],
 );
 echo '<pre>';
 print_r($globalColumns);
@@ -158,7 +168,6 @@ foreach ($globalColumns as $key => $value) {
     EOD;
         $output = $output . $thisElement;
     }
-    // @todo select list in view
     if ($globalColumns[$key]['type'] == 'selectList') {
         $first = "<select name='{$globalColumns[$key]["databaseName"]}{$globalColumns[$key]["columnShown"]}'>";
         $foreach1 = <<<EOD
@@ -350,19 +359,22 @@ class {$globalDatabaseName}Controller extends Controller
     public function index()
     {
 EDO;
-// top part oc controller
 foreach ($globalColumns as $key => $value) {
     $listTyep = $globalColumns[$key]['type'];
-
+    $dupCheck = [];
     if ($listTyep == 'selectList') {
         $model = $globalColumns[$key]['databaseName'];
-        $import = <<<EDO
-        
-        use App\Models\{$model};
-        \n
-        EDO;
-        $outputStart = $outputStart . $import;
+        array_push($dupCheck, $model);
     }
+}
+array_unique($dupCheck);
+foreach ($dupCheck as $key => $value) {
+    $thisOneOn = <<<EDO
+        
+    use App\Models\{$value};
+    
+    EDO;
+    $outputStart = $outputStart . $thisOneOn;
 }
 
 
@@ -407,6 +419,7 @@ foreach ($globalColumns as $key => $value) {
 }
 
 $output2 = <<<EDO
+
         \${$globalDatabaseName}->save();
         return redirect()->back()->with('statusMessage', ' has been added to the database');
     }
@@ -481,6 +494,7 @@ foreach ($globalColumns as $key => $value) {
 
 
 $output3 = <<<EDO
+
         \${$globalControllerVariableName}->update();
         return redirect()->back()->with('statusMessage', 'has been updated');
     }
