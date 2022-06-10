@@ -1,0 +1,18 @@
+# Ignore everything
+*
+
+# But not these files...
+!build.php
+!buildArray.php
+!buildController1Use.php
+!buildController2Index.php
+!buildController3Create.php
+!BuildController4Show.php
+!buildController5Edit.php
+!buildController6Destroy.php
+!buildDisplayMessage.php
+!buildModel.php
+!buildViewCreate.php
+!buildViewEdit.php
+!buildViewIndex.php
+!README.md
