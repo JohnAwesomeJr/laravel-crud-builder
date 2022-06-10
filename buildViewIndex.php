@@ -13,7 +13,7 @@ table {
   }
   td{
     text-align:center;
-    padding: 20px;
+    padding: 5px;
     overflow: hidden;
     white-space: nowrap;
     width: fit-content;
@@ -82,7 +82,7 @@ foreach ($globalColumns as $key => $value) {
             echo 'null';
         } 
         @endphp
-        </td>";
+        </td>
         EOD;
         $output = $output . $thisLIneItem;
     }
