@@ -1,7 +1,7 @@
 <?php
 $projectName = 'testLaravel';
 $globalName = 'assembly';
-$globalMaxNumberPerPage = 15;
+$globalMaxNumberPerPage = 5;
 $globalColumns = array(
     [
         'type' => 'dbRow',
@@ -30,11 +30,22 @@ $globalColumns = array(
     // ],
     [
         'type' => 'selectList',
-        'name' => 'selectList',
+        'name' => 'Parts',
         'htmlInputType' => 'select',
         'databaseName' => 'parts',
         'columnShown' => 'partNumber',
         'IdCollumnForThisTable' => 'selectListDropdown',
+        'ForenIdColumn' => 'id'
+
+    ],
+
+    [
+        'type' => 'selectList',
+        'name' => 'Other',
+        'htmlInputType' => 'select',
+        'databaseName' => 'parents',
+        'columnShown' => 'kid1',
+        'IdCollumnForThisTable' => 'parentsRelationship',
         'ForenIdColumn' => 'id'
 
     ],

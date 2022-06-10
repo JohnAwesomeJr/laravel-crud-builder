@@ -26,7 +26,7 @@ foreach ($globalColumns as $key => $value) {
         $output = $output . $thisElement;
     }
     if ($globalColumns[$key]['type'] == 'selectList') {
-        $first = "<select name='{$globalColumns[$key]["databaseName"]}{$globalColumns[$key]["columnShown"]}'>";
+        $first = "<br><select name='{$globalColumns[$key]["databaseName"]}{$globalColumns[$key]["columnShown"]}'>";
         $foreach1 = <<<EOD
         @foreach(\${$globalColumns[$key]['databaseName']}{$key} as \$thisline)
         @if(\$thisline->{$globalColumns[$key]['ForenIdColumn']} == \${$globalControllerVariableName}->{$globalColumns[$key]["IdCollumnForThisTable"]})
@@ -36,7 +36,7 @@ foreach ($globalColumns as $key => $value) {
         @endif
         @endforeach
         EOD;
-        $last = '</select>';
+        $last = "</select>:{$globalColumns[$key]["name"]}<br>";
         $combine = $first . $foreach1 . $last;
         $output = $output . $combine;
     }

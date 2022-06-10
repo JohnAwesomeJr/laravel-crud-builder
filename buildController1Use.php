@@ -7,9 +7,9 @@ use App\Models\{$globalDatabaseName};
 use Illuminate\Http\Request;
 EOD;
 
+$dupCheck = [];
 foreach ($globalColumns as $key => $value) {
     $listTyep = $globalColumns[$key]['type'];
-    $dupCheck = [];
     if ($listTyep == 'selectList') {
         $model = $globalColumns[$key]['databaseName'];
         array_push($dupCheck, $model);
