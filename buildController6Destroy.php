@@ -17,6 +17,6 @@ public function destroy($globalDatabaseName \${$globalDatabaseName}, \$id)
 }
 EDO;
 $myfile = fopen("{$globalControllerFolderName}/{$globalDatabaseName}Controller.php", "w") or die("Unable to open file!");
-$txt = $outputController1 . $outputController2 . $outputController3 . $outputController4 . $outputController5 . $outputController6 . $outputController7 . $outputController8 . $outputController9 . $outputController10 . $outputController11;
+$txt = $outputController1 . $outputController2 . $outputController3 . $outputController4 . $outputController4_5 . $outputController5 . $outputController6 . $outputController7 . $outputController8 . $outputController9 . $outputController10 . $outputController11;
 fwrite($myfile, $txt);
 fclose($myfile);

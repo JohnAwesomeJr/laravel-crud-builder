@@ -8,7 +8,23 @@ $outputController4 = <<<EDO
  */
 public function create()
 {
-    return view('{$globalDatabaseName}.create');
+    \$pushToViewArray = []; \n
+EDO;
+foreach ($globalColumns as $key => $value) {
+    if ($globalColumns[$key]['type'] == 'selectList') {
+
+
+        $thisThingIsGreat = <<<EDO
+            \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}::class::all();
+            \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
+            EDO;
+        $outputController4 = $outputController4 . $thisThingIsGreat;
+    }
+}
+
+$outputController4_5 = <<<EDO
+
+    return view('{$globalDatabaseName}.create',\$pushToViewArray);
 }
 
 /**
@@ -28,11 +44,13 @@ foreach ($globalColumns as $key => $value) {
     \t
     \${$globalDatabaseName}->{$globalColumns[$key]['name']} = \$request->input('{$globalColumns[$key]['name']}'); \n
     EDO;
-        $outputController4 = $outputController4 . $thisRow;
+        $outputController4_5 = $outputController4_5 . $thisRow;
     }
     if ($globalColumns[$key]['type'] == 'selectList') {
-        $thisRow = '//i am an array';
-        $outputController4 = $outputController4 . $thisRow;
+        $thisRow = <<<EDO
+        \${$globalDatabaseName}->{$globalColumns[$key]['IdCollumnForThisTable']} = \$request->input('{$globalColumns[$key]["databaseName"]}{$globalColumns[$key]["columnShown"]}'); \n
+        EDO;
+        $outputController4_5 = $outputController4_5 . $thisRow;
     }
 }
 

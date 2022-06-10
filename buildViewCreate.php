@@ -11,24 +11,34 @@ $output = <<<EOD
     @endif
 </p>
 <form action='{{ url('{$globalUrl}') }}' method='post'>
-    @csrf
+    @csrf \n
 EOD;
 foreach ($globalColumns as $key => $value) {
-    if ($globalColumns[$key]['type'] != 'dbRow') {
-        $thisElement = '<input placeholder="i am an array">';
-        $output = $output . $thisElement;
-    } else {
+    if ($globalColumns[$key]['type'] == 'dbRow') {
         $thisElement = <<<EOD
         <input name='{$globalColumns[$key]['name']}' type='{$globalColumns[$key]['htmlInputType']}'>:{$globalColumns[$key]['name']}
         <br>
         EOD;
         $output = $output . $thisElement;
     }
+    if ($globalColumns[$key]['type'] == 'selectList') {
+        $first = "<br><select name='{$globalColumns[$key]["databaseName"]}{$globalColumns[$key]["columnShown"]}'>";
+        $foreach1 = <<<EOD
+        @foreach(\${$globalColumns[$key]['databaseName']}{$key} as \$thisline)
+            <option value="{{\$thisline->{$globalColumns[$key]['ForenIdColumn']}}}">{{\$thisline->{$globalColumns[$key]['columnShown']}}}</option>
+        @endforeach
+        EOD;
+        $last = "</select>:{$globalColumns[$key]["name"]}<br>";
+        $combine = $first . $foreach1 . $last;
+        $output = $output . $combine;
+    }
 }
 
 $output2 = <<<EOD2
 
+
     <input name='submit' type='submit' value='save'>
+    
 </form>
 EOD2;
 
