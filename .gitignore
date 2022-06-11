@@ -16,4 +16,5 @@
 !buildViewEdit.php
 !buildViewIndex.php
 !README.md
-!instructions/*
+!instructions
+!instructions/
