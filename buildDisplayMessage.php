@@ -18,6 +18,7 @@ $output = <<<EDO
 </div>
 </div>
 
+
 <style>
 .card{
 max-width:900px;
