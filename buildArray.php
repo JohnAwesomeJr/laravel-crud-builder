@@ -1,23 +1,19 @@
 <?php
 $projectName = 'testLaravel';
-$globalName = 'assembly';
+$globalName = 'hotel';
 $globalMaxNumberPerPage = 5;
 $globalColumns = array(
     [
         'type' => 'dbRow',
-        'name' => 'part',
+        'name' => 'name',
         'htmlInputType' => 'text'
     ],
     [
         'type' => 'dbRow',
-        'name' => 'car',
+        'name' => 'location',
         'htmlInputType' => 'text'
     ],
-    [
-        'type' => 'dbRow',
-        'name' => 'driver',
-        'htmlInputType' => 'number'
-    ],
+
     // [
     //     'type' => 'relational',
     //     'databaseName' => 'selectList',
@@ -28,24 +24,24 @@ $globalColumns = array(
     //         'quantity' => 'number'
     //     ]
     // ],
-    [
-        'type' => 'selectList',
-        'name' => 'Parts',
-        'htmlInputType' => 'select',
-        'databaseName' => 'parts',
-        'columnShown' => 'partNumber',
-        'IdCollumnForThisTable' => 'selectListDropdown',
-        'ForenIdColumn' => 'id'
+    // [
+    //     'type' => 'selectList',
+    //     'name' => 'Parts',
+    //     'htmlInputType' => 'select',
+    //     'databaseName' => 'parts',
+    //     'columnShown' => 'partNumber',
+    //     'IdCollumnForThisTable' => 'selectListDropdown',
+    //     'ForenIdColumn' => 'id'
 
-    ],
+    // ],
 
     [
         'type' => 'selectList',
         'name' => 'Other',
         'htmlInputType' => 'select',
-        'databaseName' => 'parents',
-        'columnShown' => 'kid1',
-        'IdCollumnForThisTable' => 'parentsRelationship',
+        'databaseName' => 'party',
+        'columnShown' => 'location',
+        'IdCollumnForThisTable' => 'party_id',
         'ForenIdColumn' => 'id'
 
     ],

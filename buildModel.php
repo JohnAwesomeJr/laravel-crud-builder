@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class {$globalDatabaseName} extends Model
 {
+    protected \$table = '{$globalName}';
     use HasFactory;
-
 EOD;
 
 foreach ($globalColumns as $key => $value) {
