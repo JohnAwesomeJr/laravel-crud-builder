@@ -17,7 +17,8 @@ $output = <<<EDO
   </div>
 </div>
 </div>
-// testing
+// testing this was added by feature c
+this was added by feature b
 <style>
 .card{
 max-width:900px;
