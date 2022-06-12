@@ -37,7 +37,7 @@ $globalColumns = array(
 
     [
         'type' => 'selectList',
-        'name' => 'Other',
+        'name' => 'dropdown',
         'htmlInputType' => 'select',
         'databaseName' => 'party',
         'columnShown' => 'location',
