@@ -24,6 +24,18 @@ foreach ($globalColumns as $key => $value) {
     }
 }
 
+foreach ($globalColumns as $key => $value) {
+    if ($globalColumns[$key]['type'] == 'oneToMany') {
+
+
+        $thisThingIsGreat = <<<EDO
+            \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}::class::all();
+            \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
+            EDO;
+        $outputController7 = $outputController7 . $thisThingIsGreat;
+    }
+}
+
 
 $outputController8 = <<<EDO
     \$thisSinglesRow = $globalDatabaseName::find(\$id);
