@@ -45,6 +45,13 @@ $globalColumns = array(
         'ForenIdColumn' => 'id'
 
     ],
+    [
+        'type' => 'oneToMany',
+        'name' => 'comments',
+        'databaseName' => 'comments',
+        'IdCollumnForThisTable' => 'id',
+        'ForenIdColumn' => 'commentParent'
+    ],
 );
 
 $globalUrl = $globalName;
