@@ -39,6 +39,11 @@ $globalColumns = array(
                 'name' => 'commentBody',
                 'htmlInputType' => 'text'
             ],
+            [
+                'type' => 'dbRow',
+                'name' => 'commentParent',
+                'htmlInputType' => 'number'
+            ],
         ]
 
     ],

@@ -67,6 +67,7 @@ foreach ($globalColumns as $key => $value) {
         <div class="oneToMany">
         <form action='{{ url('{$dbName}/' . \$thisLineOne->id) }}' method='post'>
         @csrf
+        @method('put')
         {$globalColumns[$key]['name']} ID: {$thisId} <br>
         EOD;
 
