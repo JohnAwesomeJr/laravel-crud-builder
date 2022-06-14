@@ -13,28 +13,6 @@ $globalColumns = array(
         'name' => 'location',
         'htmlInputType' => 'text'
     ],
-
-    // [
-    //     'type' => 'relational',
-    //     'databaseName' => 'selectList',
-    //     'name' => 'parts',
-    //     'htmlInputType' => 'crud',
-    //     'tables' => [
-    //         'partNumber' => 'text',
-    //         'quantity' => 'number'
-    //     ]
-    // ],
-    // [
-    //     'type' => 'selectList',
-    //     'name' => 'Parts',
-    //     'htmlInputType' => 'select',
-    //     'databaseName' => 'parts',
-    //     'columnShown' => 'partNumber',
-    //     'IdCollumnForThisTable' => 'selectListDropdown',
-    //     'ForenIdColumn' => 'id'
-
-    // ],
-
     [
         'type' => 'selectList',
         'name' => 'Other',
