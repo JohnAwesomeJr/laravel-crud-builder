@@ -57,7 +57,7 @@ foreach ($globalColumns as $key => $value) {
         foreach ($thisLineOne as $key1 => $value) {
             $contentValue = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['name'] . '}}';
             $inputType = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['htmlInputType'] . '}}';
-            $input = '<input' . " value=\"{$contentValue}\" " . " type=\"{$inputType}\"" . "name=\"{$thisLineOne[$key1]['name']}\"" . ">:<br><br>";
+            $input = '<input' . " value=\"{$contentValue}\" " . " type=\"{$inputType}\"" . "name=\"{$thisLineOne[$key1]['name']}\"" . ">:{$thisLineOne[$key1]['name']}<br><br>";
             $center = $center . $input;
         }
         $thisId = '{{' . '$thisLineOne->' . 'id' . '}}';
@@ -73,7 +73,12 @@ foreach ($globalColumns as $key => $value) {
 
         $two = <<<EOD
         <input name='submit' type='submit' value='save'>
-        <button type='submit'>Delete</button>
+
+        </form>
+        <form action='{{ url('{$dbName}/' . \$thisLineOne->id) }}' method='post'>
+            @csrf
+            @method('DELETE')
+            <button type='submit'>Delete</button>
         </form>
         </div>
         @endforeach
