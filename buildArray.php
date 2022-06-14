@@ -21,7 +21,14 @@ $globalColumns = array(
         'columnShown' => 'location',
         'IdCollumnForThisTable' => 'party_id',
         'ForenIdColumn' => 'id'
-    ]
+    ],
+    [
+        'type' => 'oneToMany',
+        'name' => 'comments',
+        'databaseName' => 'comments',
+        'IdCollumnForThisTable' => 'id',
+        'ForenIdColumn' => 'commentParent'
+    ],
 );
 
 
