@@ -10,7 +10,7 @@ EOD;
 $dupCheck = [];
 foreach ($globalColumns as $key => $value) {
     $listTyep = $globalColumns[$key]['type'];
-    if ($listTyep == 'selectList') {
+    if ($listTyep == 'selectList' || $listTyep == 'oneToMany') {
         $model = $globalColumns[$key]['databaseName'];
         array_push($dupCheck, $model);
     }

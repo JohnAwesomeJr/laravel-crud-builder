@@ -14,13 +14,18 @@ EDO;
 
 foreach ($globalColumns as $key => $value) {
     if ($globalColumns[$key]['type'] == 'selectList') {
-
-
         $thisThingIsGreat = <<<EDO
             \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}s::class::all();
             \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
             EDO;
         $outputController7 = $outputController7 . $thisThingIsGreat;
+    }
+    if ($globalColumns[$key]['type'] == 'oneToMany') {
+        $oneToMany = <<<EOD
+        \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}s::class::where('{$globalColumns[$key]['ForenIdColumn']}', '=', 1)->get();
+        \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
+        EOD;
+        $outputController7 = $outputController7 . $oneToMany;
     }
 }
 

@@ -40,12 +40,26 @@ foreach ($globalColumns as $key => $value) {
         $combine = $first . $foreach1 . $last;
         $output = $output . $combine;
     }
+
+
+    $center = '';
     if ($globalColumns[$key]['type'] == 'oneToMany') {
-        $array = $globalColumns[$key];
-        $columns = $array['collumns'];
-        foreach ($columns as $key => $value) {
-            $output = $output . $columns[$key]['type'] . "<br>";
+        $dbName = $globalColumns[$key]['databaseName'];
+        $thisLineOne = $globalColumns[$key]['collumns'];
+
+        foreach ($thisLineOne as $key1 => $value) {
+            $lineItem = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['name'] . '}}' . '<br>';
+            $center = $center . $lineItem;
         }
+
+        $one = <<<EOD
+        @foreach(\${$dbName}{$key} as \$thisLineOne)
+        EOD;
+
+
+        $two = <<<EOD
+        @endforeach
+        EOD;
     }
 }
 
@@ -60,6 +74,6 @@ $output2 = <<<EOD
 </form>
 EOD;
 $myfile = fopen("{$globalViewFolderName}/edit.blade.php", "w") or die("Unable to open file!");
-$txt = $output . $output2;
+$txt = $output . $one . $center . $two . $output2;
 fwrite($myfile, $txt);
 fclose($myfile);
