@@ -35,23 +35,23 @@ $globalColumns = array(
 
     // ],
 
-    [
-        'type' => 'selectList',
-        'name' => 'dropdown',
-        'htmlInputType' => 'select',
-        'databaseName' => 'party',
-        'columnShown' => 'location',
-        'IdCollumnForThisTable' => 'party_id',
-        'ForenIdColumn' => 'id'
+    // [
+    //     'type' => 'selectList',
+    //     'name' => 'dropdown',
+    //     'htmlInputType' => 'select',
+    //     'databaseName' => 'party',
+    //     'columnShown' => 'location',
+    //     'IdCollumnForThisTable' => 'party_id',
+    //     'ForenIdColumn' => 'id'
 
-    ],
-    [
-        'type' => 'oneToMany',
-        'name' => 'comments',
-        'databaseName' => 'comments',
-        'IdCollumnForThisTable' => 'id',
-        'ForenIdColumn' => 'commentParent'
-    ],
+    // ],
+    // [
+    //     'type' => 'oneToMany',
+    //     'name' => 'comments',
+    //     'databaseName' => 'comments',
+    //     'IdCollumnForThisTable' => 'id',
+    //     'ForenIdColumn' => 'commentParent'
+    // ],
 );
 
 $globalUrl = $globalName;
