@@ -27,7 +27,20 @@ $globalColumns = array(
         'name' => 'comments',
         'databaseName' => 'comments',
         'IdCollumnForThisTable' => 'id',
-        'ForenIdColumn' => 'commentParent'
+        'ForenIdColumn' => 'commentParent',
+        'collumns' => [
+            [
+                'type' => 'dbRow',
+                'name' => 'userName',
+                'htmlInputType' => 'text'
+            ],
+            [
+                'type' => 'dbRow',
+                'name' => 'commentBody',
+                'htmlInputType' => 'text'
+            ],
+        ]
+
     ],
 );
 
