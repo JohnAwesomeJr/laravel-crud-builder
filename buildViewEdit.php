@@ -40,6 +40,13 @@ foreach ($globalColumns as $key => $value) {
         $combine = $first . $foreach1 . $last;
         $output = $output . $combine;
     }
+    if ($globalColumns[$key]['type'] == 'oneToMany') {
+        $array = $globalColumns[$key];
+        $columns = $array['collumns'];
+        foreach ($columns as $key => $value) {
+            $output = $output . $columns[$key]['type'] . "<br>";
+        }
+    }
 }
 
 $output2 = <<<EOD
