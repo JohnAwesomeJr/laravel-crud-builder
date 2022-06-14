@@ -22,7 +22,7 @@ foreach ($globalColumns as $key => $value) {
     }
     if ($globalColumns[$key]['type'] == 'oneToMany') {
         $oneToMany = <<<EOD
-        \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}s::class::where('{$globalColumns[$key]['ForenIdColumn']}', '=', 1)->get();
+        \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}s::class::where('{$globalColumns[$key]['ForenIdColumn']}', '=', \$id)->get();
         \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
         EOD;
         $outputController7 = $outputController7 . $oneToMany;

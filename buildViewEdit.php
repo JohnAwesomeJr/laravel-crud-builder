@@ -3,6 +3,13 @@
 /*                             //  make edit view                             */
 /* -------------------------------------------------------------------------- */
 $output = <<<EOD
+<style>
+.oneToMany{
+    border:solid 1px black; 
+    width:fit-content; 
+    padding:20px;
+}
+</style>
 <a href='{{ url('$globalUrl') }}'>BACK</a><br>
 <hr>
 <p style="color:lightgreen; background:black">
@@ -48,16 +55,26 @@ foreach ($globalColumns as $key => $value) {
         $thisLineOne = $globalColumns[$key]['collumns'];
 
         foreach ($thisLineOne as $key1 => $value) {
-            $lineItem = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['name'] . '}}' . '<br>';
-            $center = $center . $lineItem;
+            $contentValue = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['name'] . '}}';
+            $inputType = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['htmlInputType'] . '}}';
+            $input = '<input' . " value=\"{$contentValue}\" " . " type=\"{$inputType}\"" . "name=\"{$thisLineOne[$key1]['name']}\"" . ">:<br><br>";
+            $center = $center . $input;
         }
-
+        $thisId = '{{' . '$thisLineOne->' . 'id' . '}}';
         $one = <<<EOD
+        <h1>{$globalColumns[$key]['name']}</h1>
         @foreach(\${$dbName}{$key} as \$thisLineOne)
+        <div class="oneToMany">
+        <form action='{{ url('{$dbName}/' . \$thisLineOne->id) }}' method='post'>
+        @csrf
+        {$globalColumns[$key]['name']} ID: {$thisId} <br>
         EOD;
 
-
         $two = <<<EOD
+        <input name='submit' type='submit' value='save'>
+        <button type='submit'>Delete</button>
+        </form>
+        </div>
         @endforeach
         EOD;
     }
@@ -74,6 +91,6 @@ $output2 = <<<EOD
 </form>
 EOD;
 $myfile = fopen("{$globalViewFolderName}/edit.blade.php", "w") or die("Unable to open file!");
-$txt = $output . $one . $center . $two . $output2;
+$txt = $output . $output2 . $one . $center . $two;
 fwrite($myfile, $txt);
 fclose($myfile);
