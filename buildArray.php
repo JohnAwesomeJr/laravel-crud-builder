@@ -13,45 +13,15 @@ $globalColumns = array(
         'name' => 'location',
         'htmlInputType' => 'text'
     ],
-
-    // [
-    //     'type' => 'relational',
-    //     'databaseName' => 'selectList',
-    //     'name' => 'parts',
-    //     'htmlInputType' => 'crud',
-    //     'tables' => [
-    //         'partNumber' => 'text',
-    //         'quantity' => 'number'
-    //     ]
-    // ],
-    // [
-    //     'type' => 'selectList',
-    //     'name' => 'Parts',
-    //     'htmlInputType' => 'select',
-    //     'databaseName' => 'parts',
-    //     'columnShown' => 'partNumber',
-    //     'IdCollumnForThisTable' => 'selectListDropdown',
-    //     'ForenIdColumn' => 'id'
-
-    // ],
-
-    // [
-    //     'type' => 'selectList',
-    //     'name' => 'dropdown',
-    //     'htmlInputType' => 'select',
-    //     'databaseName' => 'party',
-    //     'columnShown' => 'location',
-    //     'IdCollumnForThisTable' => 'party_id',
-    //     'ForenIdColumn' => 'id'
-
-    // ],
-    // [
-    //     'type' => 'oneToMany',
-    //     'name' => 'comments',
-    //     'databaseName' => 'comments',
-    //     'IdCollumnForThisTable' => 'id',
-    //     'ForenIdColumn' => 'commentParent'
-    // ],
+    [
+        'type' => 'selectList',
+        'name' => 'Other',
+        'htmlInputType' => 'select',
+        'databaseName' => 'party',
+        'columnShown' => 'location',
+        'IdCollumnForThisTable' => 'party_id',
+        'ForenIdColumn' => 'id'
+    ]
 );
 
 $globalUrl = $globalName;

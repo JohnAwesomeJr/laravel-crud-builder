@@ -15,7 +15,7 @@ foreach ($globalColumns as $key => $value) {
 
 
         $thisThingIsGreat = <<<EDO
-            \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}::class::all();
+            \${$globalColumns[$key]['databaseName']}{$key} = {$globalColumns[$key]['databaseName']}s::class::all();
             \$pushToViewArray += ["{$globalColumns[$key]['databaseName']}{$key}" => \${$globalColumns[$key]['databaseName']}{$key}];
             EDO;
         $outputController4 = $outputController4 . $thisThingIsGreat;
