@@ -62,6 +62,11 @@ foreach ($globalColumns as $key => $value) {
         }
         $thisId = '{{' . '$thisLineOne->' . 'id' . '}}';
         $one = <<<EOD
+        <style>
+        .h-5 {
+            height: 20px;
+        }
+        </style>
         <h1>{$globalColumns[$key]['name']}</h1>
         @foreach(\${$dbName}{$key} as \$thisLineOne)
         <div class="oneToMany">
@@ -82,6 +87,7 @@ foreach ($globalColumns as $key => $value) {
         </form>
         </div>
         @endforeach
+        {!! \${$dbName}{$key}->links() !!}
         EOD;
     }
 }

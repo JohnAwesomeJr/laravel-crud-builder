@@ -1,7 +1,7 @@
 <?php
 $projectName = 'testLaravel';
 $globalName = 'hotel';
-$globalMaxNumberPerPage = 5;
+$globalMaxNumberPerPage = 2;
 $globalColumns = array(
     [
         'type' => 'dbRow',
