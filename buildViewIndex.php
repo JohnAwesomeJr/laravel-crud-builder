@@ -43,6 +43,10 @@ foreach ($globalColumns as $key => $value) {
         $tackOn = '<th>' . strtoupper($globalColumns[$key]['name']) . '</th>';
         $output = $output . $tackOn;
     }
+    if ($globalColumns[$key]['type'] == 'oneToMany') {
+        $tackOn = '<th>' . strtoupper($globalColumns[$key]['name']) . '</th>';
+        $output = $output . $tackOn;
+    }
 }
 
 $outputNew = <<<EOD
@@ -83,6 +87,12 @@ foreach ($globalColumns as $key => $value) {
         } 
         @endphp
         </td>
+        EOD;
+        $output = $output . $thisLIneItem;
+    }
+    if ($globalColumns[$key]['type'] == 'oneToMany') {
+        $thisLIneItem = <<<EOD
+        <td>Multiple</td>
         EOD;
         $output = $output . $thisLIneItem;
     }
