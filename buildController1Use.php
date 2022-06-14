@@ -17,9 +17,10 @@ foreach ($globalColumns as $key => $value) {
 }
 array_unique($dupCheck);
 foreach ($dupCheck as $key => $value) {
+    $withS = $value . 's';
     $thisOneOn = <<<EDO
         
-    use App\Models\{$value};
+    use App\Models\{$withS};
     
     EDO;
     $outputController1 = $outputController1 . $thisOneOn;

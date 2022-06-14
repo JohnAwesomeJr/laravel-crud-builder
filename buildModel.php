@@ -22,7 +22,7 @@ foreach ($globalColumns as $key => $value) {
         $thisThing = <<<MIKEEDO
     public function {$globalColumns[$key]['name']}()
     {
-        return \$this->belongsTo({$globalColumns[$key]['databaseName']}::class, '{$globalColumns[$key]['IdCollumnForThisTable']}', '{$globalColumns[$key]['ForenIdColumn']}');
+        return \$this->belongsTo({$globalColumns[$key]['databaseName']}s::class, '{$globalColumns[$key]['IdCollumnForThisTable']}', '{$globalColumns[$key]['ForenIdColumn']}');
     }
     MIKEEDO;
         $output = $output . $thisThing;
