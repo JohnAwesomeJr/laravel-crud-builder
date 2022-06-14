@@ -24,6 +24,7 @@ $globalColumns = array(
     ]
 );
 
+
 $globalUrl = $globalName;
 $globalDatabaseName = $globalName . 's';
 $globalControllerVariableName = 'ControllerPassedVar';
