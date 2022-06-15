@@ -47,6 +47,21 @@ $globalColumns = array(
         ]
 
     ],
+    [
+        'type' => 'oneToMany',
+        'name' => 'contributer',
+        'databaseName' => 'contributer',
+        'IdCollumnForThisTable' => 'id',
+        'ForenIdColumn' => 'hotelId',
+        'collumns' => [
+            [
+                'type' => 'dbRow',
+                'name' => 'name',
+                'htmlInputType' => 'text'
+            ],
+        ]
+
+    ],
 );
 
 
