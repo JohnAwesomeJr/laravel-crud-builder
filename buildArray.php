@@ -1,6 +1,6 @@
 <?php
 $projectName = 'testLaravel';
-$globalName = 'contributer';
+$globalName = 'hotel';
 $globalMaxNumberPerPage = 2;
 $globalColumns = array(
     [
