@@ -10,6 +10,13 @@ $output = <<<EOD
         {{ session('statusMessage') }}
     @endif
 </p>
+@php
+\$id = '';
+if (isset(\$_GET['fromOneToMany'])) {
+    \$id = \$_GET['iDlink'];
+}
+@endphp
+{{\$id}}
 <form action='{{ url('{$globalUrl}') }}' method='post'>
     @csrf \n
 EOD;

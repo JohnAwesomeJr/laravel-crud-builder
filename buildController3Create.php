@@ -9,6 +9,9 @@ $outputController4 = <<<EDO
 public function create()
 {
     \$pushToViewArray = []; \n
+    if (isset(\$_GET['fromOneToMany'])) {
+        \$pushToViewArray += ['oneToManyOwner' => 'true'];
+    }
 EDO;
 foreach ($globalColumns as $key => $value) {
     if ($globalColumns[$key]['type'] == 'selectList') {
