@@ -79,7 +79,7 @@ foreach ($globalColumns as $key => $value) {
         }
         </style>
         <h1>{$globalColumns[$key]['name']}</h1>
-        <a href='{{ url('{$globalColumns[$key]['name']}/create') }}'>ADD NEW {$globalColumns[$key]['name']}</a>
+        <a href='{{ url("{$globalColumns[$key]['name']}/create?fromOneToMany=true&iDlink={\$id}") }}'>ADD NEW {$globalColumns[$key]['name']}</a>
         @foreach(\${$dbName}{$key} as \$thisLineOne)
         <div class="oneToMany">
         <form action='{{ url('{$dbName}/' . \$thisLineOne->id) }}' method='post'>

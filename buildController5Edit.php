@@ -10,6 +10,7 @@ $outputController7 = <<<EDO
 public function edit($globalDatabaseName \${$globalDatabaseName}, \$id)
 {
     \$pushToViewArray = []; \n
+    \$pushToViewArray += [ 'id' => \$id ];
 EDO;
 
 foreach ($globalColumns as $key => $value) {
