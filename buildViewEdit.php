@@ -2,8 +2,6 @@
 /* -------------------------------------------------------------------------- */
 /*                             //  make edit view                             */
 /* -------------------------------------------------------------------------- */
-$one = '';
-$two = '';
 $output = <<<EOD
 <style>
 .oneToMany{
@@ -49,13 +47,10 @@ foreach ($globalColumns as $key => $value) {
         $combine = $first . $foreach1 . $last;
         $output = $output . $combine;
     }
-
-
-    $center = '';
     if ($globalColumns[$key]['type'] == 'oneToMany') {
         $dbName = $globalColumns[$key]['databaseName'];
         $thisLineOne = $globalColumns[$key]['collumns'];
-
+        $center = '';
         foreach ($thisLineOne as $key1 => $value) {
             $contentValue = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['name'] . '}}';
             $inputType = '{{' . '$thisLineOne->' . $thisLineOne[$key1]['htmlInputType'] . '}}';
@@ -91,6 +86,8 @@ foreach ($globalColumns as $key => $value) {
         @endforeach
         {!! \${$dbName}{$key}->links() !!}
         EOD;
+        $combine = $one . $center . $two;
+        $output = $output . $combine;
     }
 }
 
@@ -105,6 +102,6 @@ $output2 = <<<EOD
 </form>
 EOD;
 $myfile = fopen("{$globalViewFolderName}/edit.blade.php", "w") or die("Unable to open file!");
-$txt = $output . $output2 . $one . $center . $two;
+$txt = $output . $output2;
 fwrite($myfile, $txt);
 fclose($myfile);
