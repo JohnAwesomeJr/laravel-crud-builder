@@ -47,6 +47,20 @@ foreach ($globalColumns as $key => $value) {
         $combine = $first . $foreach1 . $last;
         $output = $output . $combine;
     }
+}
+
+$output2 = <<<EOD
+<br><br>
+    <input name='submit' type='submit' value='save'>
+</form>
+<form action='{{ url('{$globalUrl}/' . \${$globalControllerVariableName}->id) }}' method='post'>
+    @csrf
+    @method('DELETE')
+    <button type='submit'>Delete</button>
+</form>
+EOD;
+
+foreach ($globalColumns as $key => $value) {
     if ($globalColumns[$key]['type'] == 'oneToMany') {
         $dbName = $globalColumns[$key]['databaseName'];
         $thisLineOne = $globalColumns[$key]['collumns'];
@@ -87,20 +101,9 @@ foreach ($globalColumns as $key => $value) {
         {!! \${$dbName}{$key}->links() !!}
         EOD;
         $combine = $one . $center . $two;
-        $output = $output . $combine;
+        $output2 = $output2 . $combine;
     }
 }
-
-$output2 = <<<EOD
-<br><br>
-    <input name='submit' type='submit' value='save'>
-</form>
-<form action='{{ url('{$globalUrl}/' . \${$globalControllerVariableName}->id) }}' method='post'>
-    @csrf
-    @method('DELETE')
-    <button type='submit'>Delete</button>
-</form>
-EOD;
 $myfile = fopen("{$globalViewFolderName}/edit.blade.php", "w") or die("Unable to open file!");
 $txt = $output . $output2;
 fwrite($myfile, $txt);

@@ -59,6 +59,11 @@ $globalColumns = array(
                 'name' => 'name',
                 'htmlInputType' => 'text'
             ],
+            [
+                'type' => 'dbRow',
+                'name' => 'hotelId',
+                'htmlInputType' => 'number'
+            ],
         ]
 
     ],
