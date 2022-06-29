@@ -3,24 +3,25 @@ $projectName = 'buildTesting';
 $globalName = 'comments';
 $globalMaxNumberPerPage = 5;
 $globalColumns = array(
+    // [
+    //     'type' => 'dbRow',
+    //     'name' => 'id',
+    //     'htmlInputType' => 'number',
+    // ],
     [
         'type' => 'dbRow',
-        'name' => 'id',
-        'htmlInputType' => 'text'
-    ],
-    [
         'name' => 'user',
-        'htmlInputType' => 'text'
+        'htmlInputType' => 'text',
     ],
     [
         'type' => 'dbRow',
         'name' => 'comment',
-        'htmlInputType' => 'text'
+        'htmlInputType' => 'text',
     ],
     [
         'type' => 'dbRow',
         'name' => 'parentPostId',
-        'htmlInputType' => 'text'
+        'htmlInputType' => 'text',
     ],
 );
 
