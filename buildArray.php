@@ -5,17 +5,21 @@ $globalMaxNumberPerPage = 5;
 $globalColumns = array(
     [
         'type' => 'dbRow',
-        'name' => 'commentParent',
-        'htmlInputType' => 'number'
+        'name' => 'id',
+        'htmlInputType' => 'text'
     ],
     [
-        'type' => 'dbRow',
-        'name' => 'userName',
+        'name' => 'user',
         'htmlInputType' => 'text'
     ],
     [
         'type' => 'dbRow',
-        'name' => 'commentBody',
+        'name' => 'comment',
+        'htmlInputType' => 'text'
+    ],
+    [
+        'type' => 'dbRow',
+        'name' => 'parentPostId',
         'htmlInputType' => 'text'
     ],
 );
