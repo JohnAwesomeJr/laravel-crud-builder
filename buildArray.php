@@ -1,5 +1,5 @@
 <?php
-$projectName = 'testLaravel';
+$projectName = 'buildTesting';
 $globalName = 'comments';
 $globalMaxNumberPerPage = 5;
 $globalColumns = array(
